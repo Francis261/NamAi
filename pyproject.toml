@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mamba-attention-hybrid"
+version = "0.1.0"
+description = "Hybrid Mamba-2 + Sparse Attention language model"
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.1.0",
+]
+
+[project.optional-dependencies]
+gpu = ["mamba-ssm>=2.0.0", "causal-conv1d>=1.2.0"]
+eval = [
+    "transformers>=4.35.0,<5.0.0",
+    "datasets>=2.20.0,<3.0.0",
+    "tiktoken>=0.5.0",
+    "safetensors>=0.4.0",
+]
+dev = [
+    "pytest>=7.0",
+    "transformers>=4.35.0,<5.0.0",
+    "datasets>=2.20.0,<3.0.0",
+    "tiktoken>=0.5.0",
+    "safetensors>=0.4.0",
+]
+train = [
+    "wandb>=0.15.0",
+    "safetensors>=0.4.0",
+]
+all = [
+    "mamba-ssm>=2.0.0",
+    "causal-conv1d>=1.2.0",
+    "transformers>=4.35.0",
+    "datasets>=2.14.0",
+    "tiktoken>=0.5.0",
+    "wandb>=0.15.0",
+    "safetensors>=0.4.0",
+    "pytest>=7.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["src*"]

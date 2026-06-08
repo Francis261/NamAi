@@ -1,0 +1,56 @@
+# CPU-optimized data mix (fewer sources, stable datasets only)
+seed: 42
+max_seq_len: 256
+global_batch_size: 1
+
+sources:
+  # General Knowledge (main training source)
+  - name: c4
+    category: general
+    hf_path: c4
+    hf_config: en
+    weight: 10.0
+
+  # QA
+  - name: squad
+    category: qa
+    hf_path: squad
+    weight: 4.0
+
+  # Instruction
+  - name: alpaca
+    category: instruction
+    hf_path: tatsu-lab/alpaca
+    weight: 4.0
+
+  # Conversation
+  - name: openassistant
+    category: conversation
+    hf_path: OpenAssistant/oasst1
+    weight: 4.0
+
+  # Coding
+  - name: codealpaca
+    category: coding
+    hf_path: HuggingFaceH4/CodeAlpaca_20K
+    weight: 3.0
+
+  # Math
+  - name: gsm8k
+    category: math
+    hf_path: gsm8k
+    hf_config: main
+    weight: 3.0
+
+  # Reasoning
+  - name: hellaswag
+    category: reasoning
+    hf_path: hellaswag
+    weight: 3.0
+
+  # Reading comprehension
+  - name: race
+    category: reading
+    hf_path: race
+    hf_config: high
+    weight: 2.0

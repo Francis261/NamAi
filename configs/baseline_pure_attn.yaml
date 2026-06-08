@@ -1,0 +1,20 @@
+# Pure Attention baseline (every layer is Attention + SwiGLU)
+# attn_every_n = 1 means every layer satisfies (idx+1) % 1 == 0
+vocab_size: 50257
+d_model: 1024
+d_state: 16
+d_conv: 4
+expand_factor: 2
+num_layers: 24
+attn_every_n: 1
+num_attention_heads: 16
+num_kv_heads: 4
+d_head: 64
+swiglu_hidden_mult: 2.75
+sliding_window_size: 2048
+num_global_tokens: 64
+max_seq_len: 8192
+rope_theta: 10000.0
+rms_norm_eps: 1.0e-5
+init_std: 0.02
+use_checkpointing: false

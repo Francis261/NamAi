@@ -1,0 +1,132 @@
+seed: 42
+max_seq_len: 8192
+global_batch_size: 8
+
+sources:
+  # General Knowledge (35%)
+  - name: c4
+    category: general
+    hf_path: c4
+    hf_config: en
+    weight: 12.0
+  - name: wikipedia
+    category: general
+    hf_path: wikipedia
+    hf_config: 20220301.en
+    weight: 8.0
+  - name: pile
+    category: general
+    hf_path: monology/pile-uncopyrighted
+    weight: 6.0
+
+  # QA (10%)
+  - name: squad
+    category: qa
+    hf_path: squad
+    weight: 4.0
+  - name: triviaqa
+    category: qa
+    hf_path: trivia_qa
+    hf_config: rc
+    weight: 3.0
+  - name: natural_questions
+    category: qa
+    hf_path: natural_questions
+    weight: 3.0
+
+  # Conversation (10%)
+  - name: openassistant
+    category: conversation
+    hf_path: OpenAssistant/oasst1
+    weight: 5.0
+  - name: ultrachat
+    category: conversation
+    hf_path: HuggingFaceH4/ultrachat_200k
+    weight: 5.0
+
+  # Instruction Following (10%)
+  - name: alpaca
+    category: instruction
+    hf_path: tatsu-lab/alpaca
+    weight: 4.0
+  - name: dolly
+    category: instruction
+    hf_path: databricks/databricks-dolly-15k
+    weight: 3.0
+  - name: openhermes
+    category: instruction
+    hf_path: teknium/OpenHermes-2.5
+    weight: 3.0
+
+  # Coding (8%)
+  - name: codealpaca
+    category: coding
+    hf_path: HuggingFaceH4/CodeAlpaca_20K
+    weight: 4.0
+  - name: thestack
+    category: coding
+    hf_path: bigcode/the-stack-dedup
+    weight: 4.0
+
+  # Mathematics (8%)
+  - name: gsm8k
+    category: math
+    hf_path: gsm8k
+    hf_config: main
+    weight: 4.0
+  - name: math
+    category: math
+    hf_path: competition_math
+    weight: 4.0
+
+  # Reasoning (8%)
+  - name: hellaswag
+    category: reasoning
+    hf_path: hellaswag
+    weight: 4.0
+  - name: arc
+    category: reasoning
+    hf_path: ai2_arc
+    hf_config: ARC-Challenge
+    weight: 2.0
+  - name: bigbench
+    category: reasoning
+    hf_path: bigbench
+    weight: 2.0
+
+  # Science (3%)
+  - name: pubmedqa
+    category: science
+    hf_path: pubmed_qa
+    hf_config: pqa_labeled
+    weight: 1.5
+  - name: scq
+    category: science
+    hf_path: scq
+    weight: 1.5
+
+  # Reading Comprehension (3%)
+  - name: race
+    category: reading
+    hf_path: race
+    hf_config: high
+    weight: 3.0
+
+  # Summarization (2%)
+  - name: cnn_dailymail
+    category: summarization
+    hf_path: cnn_dailymail
+    hf_config: 3.0.0
+    weight: 2.0
+
+  # Safety & Alignment (3%)
+  - name: anthropic_hh
+    category: safety
+    hf_path: anthropic/hh-rlhf
+    weight: 3.0
+
+  # Preference Data (3%)
+  - name: ultrafeedback
+    category: preference
+    hf_path: HuggingFaceH4/ultrafeedback_binarized
+    weight: 3.0
