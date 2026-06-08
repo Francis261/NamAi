@@ -68,21 +68,46 @@ class DataMixConfig:
         )
 
 
+_DEPRECATED_ALIASES = {
+    "c4": "allenai/c4",
+}
+
 def _load_hf_source(cfg: DataSourceConfig, seed: int):
-    try:
+    _FALLBACK_SPLITS = ["train", "train_sft", "train_prefs"]
+
+    def _try_load(path, split=None):
         kwargs = dict(
-            path=cfg.hf_path,
-            split=cfg.hf_split,
+            path=path,
+            split=split or cfg.hf_split,
             streaming=True,
             trust_remote_code=True,
         )
         if cfg.hf_config:
             kwargs["name"] = cfg.hf_config
-        ds = load_dataset(**kwargs)
-        return ds
+        return load_dataset(**kwargs)
+
+    def _try_splits(path):
+        for split in _FALLBACK_SPLITS:
+            try:
+                return _try_load(path, split=split)
+            except (ValueError, KeyError):
+                continue
+        return _try_load(path)
+
+    try:
+        return _try_splits(cfg.hf_path)
     except Exception as e:
-        msg = str(e).replace("\n", " ")[:100]
-        print(f"  [WARN] Failed to load {cfg.name} ({cfg.hf_path}): {msg}")
+        alias = _DEPRECATED_ALIASES.get(cfg.hf_path)
+        if alias:
+            try:
+                print(f"  Retrying {cfg.name} with {alias}")
+                return _try_splits(alias)
+            except Exception as e2:
+                msg = str(e2).replace("\n", " ")[:100]
+                print(f"  [WARN] Failed to load {cfg.name} ({alias}): {msg}")
+        else:
+            msg = str(e).replace("\n", " ")[:100]
+            print(f"  [WARN] Failed to load {cfg.name} ({cfg.hf_path}): {msg}")
         return None
 
 

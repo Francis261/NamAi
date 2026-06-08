@@ -41,7 +41,8 @@ def load_model_from_dir(model_dir: str, device: str = "cpu") -> MambaAttentionLM
 
     safetensors_path = os.path.join(model_dir, "model.safetensors")
     if os.path.exists(safetensors_path):
-        state_dict = load_file(safetensors_path, device=device)
+        device_str = str(device) if not isinstance(device, str) else device
+        state_dict = load_file(safetensors_path, device=device_str)
     else:
         pt_path = os.path.join(model_dir, "pytorch_model.bin")
         state_dict = torch.load(pt_path, map_location=device, weights_only=True)
@@ -59,5 +60,5 @@ def load_checkpoint(ckpt_dir: str, device: str = "cpu"):
     extra = {}
     extra_path = os.path.join(ckpt_dir, "training_state.pt")
     if os.path.exists(extra_path):
-        extra = torch.load(extra_path, map_location=device, weights_only=True)
+        extra = torch.load(extra_path, map_location=str(device) if isinstance(device, torch.device) else device, weights_only=True)
     return model, extra

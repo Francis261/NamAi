@@ -41,5 +41,7 @@ def evaluate_perplexity(model, max_seq_len: int = 8192, stride: int = 512,
         total_nll += nll
         total_tokens += n_tokens
 
+    if total_tokens == 0:
+        return float("inf")
     ppl = math.exp(total_nll / total_tokens)
     return ppl

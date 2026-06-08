@@ -3,21 +3,21 @@ max_seq_len: 8192
 global_batch_size: 8
 
 sources:
-  # General Knowledge (35%)
+  # General Knowledge (37%)
   - name: c4
     category: general
     hf_path: c4
     hf_config: en
-    weight: 12.0
+    weight: 14.0
   - name: wikipedia
     category: general
     hf_path: wikipedia
     hf_config: 20220301.en
-    weight: 8.0
+    weight: 10.0
   - name: pile
     category: general
     hf_path: monology/pile-uncopyrighted
-    weight: 6.0
+    weight: 8.0
 
   # QA (10%)
   - name: squad
@@ -44,15 +44,15 @@ sources:
     hf_path: HuggingFaceH4/ultrachat_200k
     weight: 5.0
 
-  # Instruction Following (10%)
+  # Instruction Following (12%)
   - name: alpaca
     category: instruction
     hf_path: tatsu-lab/alpaca
-    weight: 4.0
+    weight: 5.0
   - name: dolly
     category: instruction
     hf_path: databricks/databricks-dolly-15k
-    weight: 3.0
+    weight: 4.0
   - name: openhermes
     category: instruction
     hf_path: teknium/OpenHermes-2.5
@@ -63,9 +63,9 @@ sources:
     category: coding
     hf_path: HuggingFaceH4/CodeAlpaca_20K
     weight: 4.0
-  - name: thestack
+  - name: code_instructions
     category: coding
-    hf_path: bigcode/the-stack-dedup
+    hf_path: codeparrot/github-code-instructions
     weight: 4.0
 
   # Mathematics (8%)
@@ -73,11 +73,11 @@ sources:
     category: math
     hf_path: gsm8k
     hf_config: main
-    weight: 4.0
-  - name: math
+    weight: 5.0
+  - name: math_qa
     category: math
-    hf_path: competition_math
-    weight: 4.0
+    hf_path: math_qa
+    weight: 3.0
 
   # Reasoning (8%)
   - name: hellaswag
@@ -89,9 +89,9 @@ sources:
     hf_path: ai2_arc
     hf_config: ARC-Challenge
     weight: 2.0
-  - name: bigbench
+  - name: cosmosqa
     category: reasoning
-    hf_path: bigbench
+    hf_path: cosmos_qa
     weight: 2.0
 
   # Science (3%)
@@ -100,9 +100,9 @@ sources:
     hf_path: pubmed_qa
     hf_config: pqa_labeled
     weight: 1.5
-  - name: scq
+  - name: scitail
     category: science
-    hf_path: scq
+    hf_path: sci_tail
     weight: 1.5
 
   # Reading Comprehension (3%)
@@ -129,4 +129,5 @@ sources:
   - name: ultrafeedback
     category: preference
     hf_path: HuggingFaceH4/ultrafeedback_binarized
+    hf_split: train_prefs
     weight: 3.0
