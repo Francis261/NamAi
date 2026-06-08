@@ -4,12 +4,26 @@ from datasets import load_dataset
 from src.model.tokenizer import get_tokenizer
 
 
+_DATASET_ALIASES = {
+    "c4": "allenai/c4",
+}
+
+def _resolve_dataset(path: str, config: str, split: str):
+    try:
+        return load_dataset(path, config, split=split, streaming=True)
+    except Exception:
+        alias = _DATASET_ALIASES.get(path)
+        if alias:
+            return load_dataset(alias, config, split=split, streaming=True)
+        raise
+
+
 class TokenizedDataset(IterableDataset):
     def __init__(self, dataset_name: str = "c4", split: str = "train",
                  max_seq_len: int = 8192, dataset_size: int = None):
         self.max_seq_len = max_seq_len
         self.tokenizer = get_tokenizer()
-        dataset = load_dataset(dataset_name, "en", split=split, streaming=True)
+        dataset = _resolve_dataset(dataset_name, "en", split)
         if dataset_size:
             dataset = dataset.take(dataset_size)
         self.dataset = dataset
